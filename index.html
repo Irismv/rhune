@@ -256,7 +256,7 @@
 </div>
 
 <!-- Muziek autoplay + loop -->
-<audio id="music" autoplay loop>
+<audio id="music" loop>
     <source src="mystery_of_love.mp3" type="audio/mpeg">
 </audio>
 
@@ -281,6 +281,8 @@
 
     const music = document.getElementById("music");
 
+    document.addEventListener("click", () => { const music = document.getElementById("music"); music.play().catch(() => {}); }, { once: true });
+    
     /* Muziek-analyse voor hartjes */
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const analyser = audioCtx.createAnalyser();
@@ -479,4 +481,5 @@ setInterval(spawnDancers, 5000); // elke 5 sec nieuwe dansers
 
 </body>
 </html>
+
 
