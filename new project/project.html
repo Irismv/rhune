@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Voor meiske Rhune 💘</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ff9a9e, #fecfef);
+        font-family: "Georgia", serif;
+        text-align: center;
+        color: #4a0e0e;
+    }
+
+    .screen {
+        display: none;
+        padding: 60px 20px 20px;
+    }
+
+    .screen.active {
+        display: block;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    button {
+        font-size: 1.1rem;
+        padding: 10px 22px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin: 10px;
+    }
+
+    .primary {
+        background-color: #ff4d6d;
+        color: white;
+    }
+
+    .primary:hover {
+        background-color: #ff1e4d;
+        transform: scale(1.05);
+    }
+
+    .secondary {
+        background-color: #ffffff;
+        color: #ff4d6d;
+        border: 2px solid #ff4d6d;
+    }
+
+    /* Nee-knop */
+    #no {
+        position: absolute;
+    }
+
+    /* Muziek-reactieve hartjes */
+    .heart {
+        position: fixed;
+        top: -50px;
+        font-size: 24px;
+        color: #ff1e4d;
+        animation: fall linear forwards;
+        opacity: 0.9;
+        z-index: 1;
+    }
+    /* Vallende rozen */
+.rose {
+    position: fixed;
+    top: -50px;
+    font-size: 28px;
+    animation: fall linear forwards;
+    opacity: 0.9;
+    z-index: 1;
+}
+
+/* Dansende GIF-jes */
+.dancer {
+    position: fixed;
+    width: 120px; /* pas aan naar wens */
+    height: auto;
+    animation: dance 3s infinite ease-in-out;
+    z-index: 2;
+}
+
+@keyframes dance {
+    0% { transform: translateY(0) rotate(0deg) scale(1); }
+    50% { transform: translateY(-20px) rotate(10deg) scale(1.1); }
+    100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+
+    @keyframes fall {
+        0% { transform: translateY(-50px); opacity: 1; }
+        100% { transform: translateY(110vh); opacity: 0; }
+    }
+
+    /* Tijdlijn */
+    .timeline-container {
+        margin-top: 40px;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 20px;
+    }
+
+    .timeline-line {
+        position: relative;
+        height: 4px;
+        background-color: rgba(255, 255, 255, 0.7);
+        margin: 40px 40px 0;
+    }
+
+    .timeline-dots {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 40px;
+        margin-top: -25px;
+    }
+
+    .dot {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid #ff4d6d;
+        cursor: pointer;
+        flex-shrink: 0;
+        background-color: #fff;
+    }
+
+    .dot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Pop-up kaartje */
+    .event-card {
+        margin-top: 30px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        animation: fadeIn 0.5s ease;
+    }
+
+    .event-card h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Galerij op eindscherm */
+    .gallery {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .gallery img {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+        transform: scale(1.05);
+    }
+</style>
+</head>
+<body>
+
+<!-- SCHERM 1: INTRO -->
+<div class="screen active" id="screen-intro">
+    <h1> Voor meiske Rhune </h1>
+    <p>Rhune, ik heb iets heeeeeeeeeeeeeeeeeeel belangrijks dat ik je MOET vragen..</p>
+    <p>Maar ik wil dat moment een beetje specialer maken.</p>
+    <button class="primary" id="to-facts">Ga verder</button>
+</div>
+
+<!-- SCHERM 2: FEITJES AANKONDIGING -->
+<div class="screen" id="screen-facts-intro">
+    <h1>Eerst een paar feitjes over ons…</h1>
+    <p>Want ons verhaal is niet zomaar begonnen zoals dat bij normale mensen gaat.</p>
+    <p>Het is opgebouwd uit grappige momenten, veeel chaos, inside jokes en helaas speelt ook discord een rol in ons verhaal.</p>
+    <button class="primary" id="to-timeline">Laat maar zien dan</button>
+</div>
+
+<!-- SCHERM 3: TIJDLIJN -->
+<div class="screen" id="screen-timeline">
+    <h1>Onze tijdlijn </h1>
+    <p id="days-text"></p>
+    <p>Klik op een bolletje om een stukje van ons hele grappige verhaal te zien.</p>
+
+    <div class="timeline-container">
+        <div class="timeline-line"></div>
+        <div class="timeline-dots" id="timeline-dots">
+            <!-- Bolletjes worden via JS gevuld -->
+        </div>
+    </div>
+
+    <div id="event-card-container"></div>
+
+    <button class="primary" id="to-transition">Oké, ik heb genoeg gezien</button>
+</div>
+
+<!-- SCHERM 4: OVERGANG -->
+<div class="screen" id="screen-transition">
+    <h1>En al die momenten samen…</h1>
+    <p>Van Roosendaal in die hitte, tot Leuven, tot de horrordate, kerst en alles ertussenin…</p>
+    <p>maken dat er maar één logische vraag overblijft.</p>
+    <button class="primary" id="to-question">Stel 'm dan</button>
+</div>
+
+<!-- SCHERM 5: DE VRAAG -->
+<div class="screen" id="screen-question">
+    <h1> Lieve Rhune… </h1>
+    <p>Oke luister.. ik weet dat dit allemaal beetje cliché enzo voelt
+         en dat wij normaal haten op koppels die dit zo doen</p>
+    <p>Maar ja.. blijkbaar zijn wij nu officieel zo'n soort koppel geworden. 
+        Het soort koppel dat ineens wel dit soort cheesy dingen doen en het vervolgens nog leuk vindt ook.
+    </p>
+    <p> En ergens vind ik dat best grappig, want als iemand mij een jaar geleden had verteld dat ik dit zo voor jou zou maken, had ik ze waarschijnlijk uitgelachen</p>
+    <p>Maar hier zijn we dan..
+        En ik zou het voor niemand anders willen doen.
+    </p>
+    <p><strong>Dus... zou jij mijn valentijn willen zijn?</strong></p>
+
+    <div class="buttons">
+        <button class="primary" id="yes">Ja, duuhh</button>
+        
+        <button class="secondary" id="no">Nee, vandaag niet.. misschien morgen?</button>
+    </div>
+</div>
+
+<!-- Muziek autoplay + loop -->
+<audio id="music" autoplay loop>
+    <source src="mystery_of_love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    const screens = {
+        intro: document.getElementById("screen-intro"),
+        factsIntro: document.getElementById("screen-facts-intro"),
+        timeline: document.getElementById("screen-timeline"),
+        transition: document.getElementById("screen-transition"),
+        question: document.getElementById("screen-question")
+    };
+
+    function showScreen(name) {
+        Object.values(screens).forEach(s => s.classList.remove("active"));
+        screens[name].classList.add("active");
+    }
+
+    document.getElementById("to-facts").addEventListener("click", () => showScreen("factsIntro"));
+    document.getElementById("to-timeline").addEventListener("click", () => showScreen("timeline"));
+    document.getElementById("to-transition").addEventListener("click", () => showScreen("transition"));
+    document.getElementById("to-question").addEventListener("click", () => showScreen("question"));
+
+    const music = document.getElementById("music");
+
+    /* Muziek-analyse voor hartjes */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+
+    const source = audioCtx.createMediaElementSource(music);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+
+    let dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.textContent = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 8000);
+    }
+    function createRose() {
+    const rose = document.createElement("div");
+    rose.classList.add("rose");
+    rose.textContent = "🌹";
+
+    rose.style.left = Math.random() * 100 + "vw";
+    rose.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+    document.body.appendChild(rose);
+
+    setTimeout(() => rose.remove(), 8000);
+}
+function spawnDancers() {
+    for (let i = 0; i < 8; i++) {  // aantal dansers
+        const dancer = document.createElement("img");
+        dancer.src = "dancing-happy-dance.gif"; // vervang met jouw gif-bestandsnaam
+        dancer.classList.add("dancer");
+
+        dancer.style.left = Math.random() * 100 + "vw";
+        dancer.style.top = Math.random() * 100 + "vh";
+
+        document.body.appendChild(dancer);
+
+        // laat ze langzaam verdwijnen na 10 sec
+        setTimeout(() => dancer.remove(), 10000);
+    }
+}
+
+
+
+    function animateHearts() {
+        analyser.getByteFrequencyData(dataArray);
+        let avg = dataArray.reduce((a, b) => a + b) / dataArray.length;
+
+        document.querySelectorAll(".heart").forEach(h => {
+            let scale = 1 + avg / 150;
+            h.style.transform = `scale(${scale})`;
+        });
+
+        requestAnimationFrame(animateHearts);
+    }
+
+    setInterval(createHeart, 600);
+    setInterval(createRose, 900);
+
+    animateHearts();
+
+    /* Tijdlijn-data */
+    const events = [
+        {
+            id: "roosendaal",
+            img: "scheel.jpg", // zet hier een passende foto voor Roosendaal
+            title: "Ver in het verleden — Roosendaal",
+            text: "Niemand weet waarom we eigenlijk hadden afgesproken. Maar daar zaten we dan: op een terras, 35 graden, in die fucking hete zon. Als ik het me goed herinner hebben we daar zo een 6 uur gezeten? Op dat moment kon ik me niet voorstellen dat we daadwerkelijk 6 uur daar gezeten hebben, maar achteraf gezien hebben we wel op meer vlakken die 6 uur overtroffen, en valt dat dus reuze mee."
+        },
+        {
+            id: "liefdesconfessie",
+            img: "bam.jpg", // willekeurige foto
+            title: "10 juli — Jouw liefdesconfessie",
+            text: "De dag dat jij in een dronken bui aankondigde dat wij maar eens op date moesten gaan. Het is ook maar beter dat jij dit toen gezegd hebt, want anders waren we nu misschien nog steeds alleen 'discord vrienden'..."
+        },
+        {
+            id: "leuven",
+            img: "leuven.jpg", // HIER jouw Leuven-foto neerzetten
+            title: "27 augustus — Leuven",
+            text: "Samen in Leuven uitgaan was het plan. Waar iets had kunnen gebeuren… maar ja, het gebeurde dus niet. Jij weet precies wat ik bedoel. Of nou ja… misschien ook niet, aangezien we blijkbaar andere ideeën hadden voor die avond... Maakt ook niet uit want uiteindelijk heeft Leuven meer voordelen dan nadelen gehad."
+        },
+        {
+            id: "vrienden-auto",
+            img: "spiegel-foto.jpg", // bv. jij of zij, maakt niet uit
+            title: "5 september — Vrienden & schakelen",
+            text: "De dag dat je mijn vrienden voor het eerst ontmoette. En de dag waarop je voor een van de eerste én laatste keren probeerde te schakelen in mijn auto. De koppeling heeft sindsdien nog steeds lichte trauma’s denk ik."
+        },
+        {
+            id: "horrodate",
+            img: "aaaaa.jpg",
+            title: "21 september — De horrodate",
+            text: "Een date die begon als een goed gepland plan en eindigde als een.. ja ik heb geen eens een goed woord om te omschrijven wat daar allemaal mis liep. Het staat hier misschien wel beschreven als 'horrordate', maar terugkijkend was er weinig horror aan die dag/nacht/dag. Te veel gebeurd om hier te zetten, helaas! Maar het was zeker een date die ik niet meer zal vergeten."
+        },
+        {
+            id: "samen",
+            img: "bwaah.jpg", // bv. jullie samen in de spiegel
+            title: "7 oktober — Wij officieel samen",
+            text: "De dag dat het écht werd. De dag dat jij aankondigde dat ik jou mijn vriendin mocht noemen. Goh je moest eens weten wat ik voelde toen je dat appje stuurde. Ik denk dat elk positief woord dat ik kan verzinnen een understatement is van hoe ik me echt voelde."
+        },
+        {
+            id: "kerst",
+            img: "sport.jpg", // als je nog een kerstfoto hebt, anders hergebruik
+            title: "Kerst samen",
+            text: "Onze eerste kerst samen, en zeker niet onze laatste. Ik heb van elk moment die dagen genoten. Onze vele tripjes in de auto (de bijna crashes waren wat minder..), de gezellige momentjes met onze familie en uiteraard de leuke momenten die wij samen gehad hebben, maken dit een kerst voor mij om niet meer te vergeten."
+        },
+        {
+            id: "oudnieuw",
+            img: "ankie.gif", // optioneel, anders hergebruik
+            title: "Oud & Nieuw… helaas niet samen",
+            text: "We waren niet samen met Oud & Nieuw helaaaaas.. Maar volgend jaar gaat dat sowieso anders zijn. dat MOET!!!!"
+        }
+    ];
+
+    /* Tijdlijn-bolletjes vullen */
+    const dotsContainer = document.getElementById("timeline-dots");
+    const eventCardContainer = document.getElementById("event-card-container");
+
+    events.forEach((ev, index) => {
+        const dot = document.createElement("div");
+        dot.classList.add("dot");
+
+        const img = document.createElement("img");
+        img.src = ev.img;
+        img.alt = ev.id;
+
+        dot.appendChild(img);
+        dotsContainer.appendChild(dot);
+
+        dot.addEventListener("click", () => {
+            eventCardContainer.innerHTML = `
+                <div class="event-card">
+                    <h2>${ev.title}</h2>
+                    <p>${ev.text}</p>
+                </div>
+            `;
+        });
+    });
+
+    /* Aantal dagen sinds 7 oktober */
+    function updateDays() {
+        const start = new Date("2025-10-07"); 
+        const today = new Date();
+        const diffTime = today - start;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const daysText = document.getElementById("days-text");
+        daysText.textContent = `We zijn nu al ${diffDays} dagen officieel samen sinds 7 oktober.`;
+    }
+    updateDays();
+
+    /* Nee-knop gedrag op vraag-scherm */
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const questionScreen = document.getElementById("screen-question");
+
+    function placeNoButton() {
+        const rect = questionScreen.getBoundingClientRect();
+        const x = rect.width / 2 + 80;
+        const y = rect.height / 2 + 40;
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    }
+    placeNoButton();
+
+    noBtn.addEventListener("mouseover", () => {
+        const rect = questionScreen.getBoundingClientRect();
+        const x = Math.random() * (rect.width - 150);
+        const y = Math.random() * (rect.height - 100);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    });
+
+    yesBtn.addEventListener("click", () => {spawnDancers();
+setInterval(spawnDancers, 5000); // elke 5 sec nieuwe dansers
+
+        questionScreen.innerHTML = `
+            <h1>💖 thanks, niffo 💖</h1>
+            <p>Je hebt officieel de juiste keuze gemaakt.
+                Niet dat er echt een andere optie was, maar alsnog.. respect.</p>
+            <p>Terugkijkend op hoe wij precies tot dit moment zijn gekomen is nog steeds insane.. maar ik klaag absoluut niet. Ik ben echt suuper dankbaar voor wat we nu allemaal met ons tweetjes hebben en ik hoop (en denk) dat ik nog heel lang de kans krijg om hier dankbaar voor te zijn</p>
+            <p>Vanaf nu ben jij mijn Valentijn.</p>
+            <p>Deal met de consequenties.</p>
+        `;
+    });
+
+    window.addEventListener("resize", placeNoButton);
+</script>
+
+</body>
+</html>
