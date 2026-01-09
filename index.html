@@ -258,8 +258,10 @@
 
 <!-- Muziek autoplay + loop -->
 <audio id="music" loop>
-    <source src="mystery_of_love.mp3" type="audio/mpeg">
+    <source src="mystery_of_love3.mp3" type="audio/mpeg">
 </audio>
+
+
 
 <script>
     const screens = {
@@ -280,9 +282,17 @@
     document.getElementById("to-transition").addEventListener("click", () => showScreen("transition"));
     document.getElementById("to-question").addEventListener("click", () => showScreen("question"));
 
-    const music = document.getElementById("music");
+   const music = document.getElementById("music");
+let audioStarted = false;
 
-    document.addEventListener("click", () => { const music = document.getElementById("music"); music.play().catch(() => {}); }, { once: true });
+document.addEventListener("click", () => {
+    if (!audioStarted) {
+        audioCtx.resume();   // AudioContext activeren
+        music.play();        // muziek starten
+        audioStarted = true;
+    }
+}, { once: true });
+
     
     /* Muziek-analyse voor hartjes */
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
